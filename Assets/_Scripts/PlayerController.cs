@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
@@ -9,11 +10,15 @@ public class PlayerController : MonoBehaviour
 
     private Animator _animator;
     [SerializeField] private float turnSpeed = 20f;
+
+    private Rigidbody _rigidbody;
+    private Quaternion _rotation = Quaternion.identity;
     
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -33,5 +38,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isWalking", isWalking);
 
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, movement, turnSpeed * Time.deltaTime, 0f);
+        _rotation = Quaternion.LookRotation(desiredForward);
+    }
+
+    private void OnAnimatorMove()
+    {
+        _rigidbody.MovePosition(_rigidbody.position + movement * _animator.deltaPosition.magnitude);
+        _rigidbody.MoveRotation(_rotation);
     }
 }

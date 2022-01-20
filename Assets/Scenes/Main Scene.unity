@@ -328,7 +328,7 @@ PrefabInstance:
     - target: {fileID: 2076041585465895971, guid: e157392b2d3a59a439c3a7a747e24dd2,
         type: 3}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8644494329371594571, guid: e157392b2d3a59a439c3a7a747e24dd2,
         type: 3}
@@ -338,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 8644494329371594571, guid: e157392b2d3a59a439c3a7a747e24dd2,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8644494329379028099, guid: e157392b2d3a59a439c3a7a747e24dd2,
         type: 3}
