@@ -4253,6 +4253,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5245172910174282263, guid: 98b96e2f2cacd274e8d3cf29cd3c0fdb,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8172175274954827819, guid: 98b96e2f2cacd274e8d3cf29cd3c0fdb,
         type: 3}
       propertyPath: m_Name
@@ -4313,6 +4318,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8822994115400894077, guid: 98b96e2f2cacd274e8d3cf29cd3c0fdb,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2215220728407278791}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98b96e2f2cacd274e8d3cf29cd3c0fdb, type: 3}
 --- !u!1001 &7586703137689286725
