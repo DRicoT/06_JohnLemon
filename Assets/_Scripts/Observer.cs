@@ -10,7 +10,7 @@ public class Observer : MonoBehaviour
 {
     [SerializeField] private Transform player;
     private bool isPlayerInRange = false;
-
+    public GameEnding gameEnding;
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == player)
@@ -42,10 +42,20 @@ public class Observer : MonoBehaviour
             /*Se define el rayo. Necesita posición desde la que se inicia el rayo,
              y la dirección, que la hemos definido anteriormente*/
             Ray ray = new Ray(transform.position, direction);
+            
+            /*Ahora definimos una variable que va a recoger el choque del rayo contra algo, y
+             podremos preguntarle contra qué ha chocado*/
 
-            if (Physics.Raycast(ray)) //Physics.Raycast() es una función que devuelve una booleana, true si algo está por en medio, false si no hay nada que lo obstaculice.
+            RaycastHit raycastHit;
+            
+            if (Physics.Raycast(ray, out raycastHit)) //Physics.Raycast() es una función que devuelve una booleana,
+                                      //true si algo está por en medio, false si no hay nada que lo obstaculice.
+                                      //Y el out devuelve el choque a una variable previamente declarada.
             {
-                
+                if (raycastHit.collider.transform == player)
+                {
+                    
+                }
             }
         }
     }
