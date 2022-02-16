@@ -36,17 +36,20 @@ public class Observer : MonoBehaviour
               El vector AB se calcula restando el vector B menos el A.
               Como nuestro player tiene el centro en el 000, se le suma el vector
               Vector3.up para que suba un metro su posición y se coloque en el pecho*/
-            
             Vector3 direction = player.position - transform.position + Vector3.up;
             
             /*Se define el rayo. Necesita posición desde la que se inicia el rayo,
              y la dirección, que la hemos definido anteriormente*/
             Ray ray = new Ray(transform.position, direction);
             
+            /*El comando para pintar el rayo como gizmo, con parámentros (inicio, dirección, color, duración, boolena
+             para que si hay un objeto entre la cámara y el rayo, éste se difumina*/ 
+            Debug.DrawRay(transform.position, direction, Color.magenta, Time.deltaTime, true);
+            
             /*Ahora definimos una variable que va a recoger el choque del rayo contra algo, y
              podremos preguntarle contra qué ha chocado*/
 
-            RaycastHit raycastHit;
+            RaycastHit raycastHit; //Declarar variable RaycastHit
             
             if (Physics.Raycast(ray, out raycastHit)) //Physics.Raycast() es una función que devuelve una booleana,
                                       //true si algo está por en medio, false si no hay nada que lo obstaculice.
@@ -54,9 +57,17 @@ public class Observer : MonoBehaviour
             {
                 if (raycastHit.collider.transform == player)
                 {
-                    
+                    gameEnding.CatchPlayer();
                 }
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 0.1f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, player.position);
     }
 }

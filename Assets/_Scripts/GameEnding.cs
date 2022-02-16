@@ -8,11 +8,12 @@ public class GameEnding : MonoBehaviour
 {
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float imageDuration = 1f;
-    private bool isPlayerAtExit;
+    private bool isPlayerAtExit, isPlayerCaught;
     private float timer;
 
     [SerializeField] private GameObject player;
     [SerializeField] private CanvasGroup exitCanvasGroup;
+    [SerializeField] private CanvasGroup caughtCanvasGroup;
 
     
     private void OnTriggerEnter(Collider other)
@@ -27,19 +28,38 @@ public class GameEnding : MonoBehaviour
     {
         if (isPlayerAtExit)
         {
-            timer += Time.deltaTime;
-            exitCanvasGroup.alpha = Mathf.Clamp(timer / fadeDuration, 0,1);
+            EndLevel(exitCanvasGroup, false);
+        }
+        else if (isPlayerCaught)
+        {
+            EndLevel(caughtCanvasGroup, true);
+        }
+    }
+
+    /// <summary>
+    /// Lanza la imagen de fin de la partida
+    /// </summary>
+    /// <param name="imageCanvasGroup">Imagen de fin de partida correspondiente</param>
+    void EndLevel(CanvasGroup imageCanvasGroup, Boolean doRestart)
+    {
+        timer += Time.deltaTime;
+        imageCanvasGroup.alpha = Mathf.Clamp(timer / fadeDuration, 0,1);
             
-            if (timer > fadeDuration + imageDuration)
+        if (timer > fadeDuration + imageDuration)
+        {
+            if (doRestart)
             {
-                EndLevel();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                Application.Quit(); // Para Salir de la aplicación
             }
         }
     }
 
-    void EndLevel()
+    public void CatchPlayer()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // Application.Quit(); // Para Salir de la aplicación
+        isPlayerCaught = true;
     }
 }
