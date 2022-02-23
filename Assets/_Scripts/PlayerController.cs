@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
     private Vector3 movement;
@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSpeed = 20f;
 
     private Rigidbody _rigidbody;
+    private AudioSource _audioSource;
     private Quaternion _rotation = Quaternion.identity;
     
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
     }
     
     void FixedUpdate()
@@ -38,11 +40,25 @@ public class PlayerController : MonoBehaviour
 
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, movement, turnSpeed * Time.fixedDeltaTime, 0f);
         _rotation = Quaternion.LookRotation(desiredForward);
+
+        if (isWalking)
+        {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+        }
+        else
+        {
+            _audioSource.Stop();//Si pausas el audio, se reproducirá desde donde lo pausó. 
+                                //Si lo paras, empezará desde el principio.
+        }
     }
 
     private void OnAnimatorMove()
     {
         _rigidbody.MovePosition(_rigidbody.position + movement * _animator.deltaPosition.magnitude);
         _rigidbody.MoveRotation(_rotation);
+        
     }
 }

@@ -14,8 +14,11 @@ public class GameEnding : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private CanvasGroup exitCanvasGroup;
     [SerializeField] private CanvasGroup caughtCanvasGroup;
-
     
+    [SerializeField] private AudioSource caughtAudio, winAudio;
+    private bool hasAudioPlayed;
+    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
@@ -28,11 +31,11 @@ public class GameEnding : MonoBehaviour
     {
         if (isPlayerAtExit)
         {
-            EndLevel(exitCanvasGroup, false);
+            EndLevel(exitCanvasGroup, false, winAudio);
         }
         else if (isPlayerCaught)
         {
-            EndLevel(caughtCanvasGroup, true);
+            EndLevel(caughtCanvasGroup, true, caughtAudio);
         }
     }
 
@@ -40,8 +43,13 @@ public class GameEnding : MonoBehaviour
     /// Lanza la imagen de fin de la partida
     /// </summary>
     /// <param name="imageCanvasGroup">Imagen de fin de partida correspondiente</param>
-    void EndLevel(CanvasGroup imageCanvasGroup, Boolean doRestart)
+    void EndLevel(CanvasGroup imageCanvasGroup, Boolean doRestart, AudioSource audioSource)
     {
+        if (!hasAudioPlayed)
+        {
+            audioSource.Play();
+            hasAudioPlayed = true;
+        }
         timer += Time.deltaTime;
         imageCanvasGroup.alpha = Mathf.Clamp(timer / fadeDuration, 0,1);
             
