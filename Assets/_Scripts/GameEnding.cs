@@ -29,6 +29,11 @@ public class GameEnding : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        
         if (isPlayerAtExit)
         {
             EndLevel(exitCanvasGroup, false, winAudio);
